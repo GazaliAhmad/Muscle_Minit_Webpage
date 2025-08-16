@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&family=Raleway:wght@500&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #1E1E1E;
+}
+h1, h2, h3, h4, h5, h6, .btn {
+  font-family: 'Montserrat', sans-serif;
+}
+.subheading {
+  font-family: 'Raleway', sans-serif;
+}
+.nav-button {
+  transition: transform 0.2s, background-color 0.3s;
+}
+.nav-button:hover {
+  transform: scale(1.1);
+  background-color: #4BB3A8;
+}
+.nav-button:active {
+  transform: scale(0.95);
+  background-color: #F56A4D;
+}
+main section {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.4s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+main section.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 10;
+}
+@keyframes spinOnce {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-once {
+  animation: spinOnce 1s linear;
+}
+main section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+main section > img.object-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+
