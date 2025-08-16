@@ -5,18 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MuscleMinit</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico?v=1" />
-
-  <!-- Meta Description & Keywords -->
   <meta name="description" content="MuscleMinit provides precision-focused sports massage and cupping therapy for athletes and active individuals. Book now for pain relief and recovery." />
   <meta name="keywords" content="sports massage, muscle therapy, pain relief, cupping, recovery, active lifestyle, Singapore massage, MuscleMinit" />
 
-  <!-- Tailwind CSS & Alpine.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Fonts: Space Grotesk (headings) & Inter (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -26,30 +21,28 @@
     .spin-once    { animation: spin 0.7s linear 1; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    /* ---- MOBILE FIX: prevent horizontal page scroll ---- */
+    /* --- HORIZONTAL SCROLL PATCH (ONLY) --- */
     html, body { overflow-x: hidden; }
+    main, main section { overflow-x: hidden; }        /* clamp any transformed child width */
     main section > img {
       left: 0 !important;
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;                         /* was 100vw; prevents Safari lateral overflow */
+      max-width: 100% !important;
       display: block;
       position: absolute;
       object-fit: cover;
       z-index: 0;
     }
 
-    /* section transitions */
     main section   { position: absolute; inset: 0; opacity: 0; transform: translateX(0); transition: opacity 300ms ease, transform 300ms ease; }
     main section.active { opacity: 1; }
   </style>
 
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/custom.css" />
 </head>
 
 <body class="bg-[#FAF3E0] md:overflow-hidden md:h-screen w-full relative min-h-screen overflow-y-auto font-body">
 
-  <!-- HEADER / NAV -->
   <header
     class="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-sm shadow-md flex justify-between items-center px-4 md:px-12 py-4"
     x-data="{ open: false }"
@@ -63,7 +56,6 @@
       </span>
     </a>
 
-    <!-- Hamburger (mobile only) -->
     <button
       class="md:hidden flex items-center px-3 py-2 rounded text-2xl"
       @click="open = !open"
@@ -77,7 +69,6 @@
       </svg>
     </button>
 
-    <!-- Desktop Menu (unchanged) -->
     <nav class="hidden md:flex space-x-2" role="navigation" aria-label="Primary">
       <button class="nav-button text-xl px-4 py-2 rounded" onclick="showSection('about')" aria-controls="about">About</button>
       <button class="nav-button text-xl px-4 py-2 rounded" onclick="showSection('testimonials')" aria-controls="testimonials">Reviews</button>
@@ -87,36 +78,27 @@
       <button class="nav-button text-xl px-4 py-2 rounded" onclick="showSection('contact')" aria-controls="contact">Contact</button>
     </nav>
 
-    <!-- Mobile Dropdown Menu -->
     <nav
       class="absolute top-full left-0 w-full bg-white/95 shadow-md md:hidden flex flex-col items-start transition-all duration-200"
       x-show="open" x-transition @click.away="open=false" style="display:none"
       role="navigation" aria-label="Mobile"
     >
-      <!-- MOBILE FIX: use Alpine-aware @click to close menu before navigating -->
       <button class="nav-button w-full text-left text-lg px-6 py-3 border-b border-gray-200"
         @click="open=false; $nextTick(() => showSection('about'))" aria-controls="about">About</button>
-
       <button class="nav-button w-full text-left text-lg px-6 py-3 border-b border-gray-200"
         @click="open=false; $nextTick(() => showSection('testimonials'))" aria-controls="testimonials">Reviews</button>
-
       <button class="nav-button w-full text-left text-lg px-6 py-3 border-b border-gray-200"
         @click="open=false; $nextTick(() => showSection('individuals'))" aria-controls="individuals">Individuals</button>
-
       <button class="nav-button w-full text-left text-lg px-6 py-3 border-b border-gray-200"
         @click="open=false; $nextTick(() => showSection('corporate'))" aria-controls="corporate">Corporate</button>
-
       <button class="nav-button w-full text-left text-lg px-6 py-3 border-b border-gray-200"
         @click="open=false; $nextTick(() => showSection('packages'))" aria-controls="packages">Packages</button>
-
       <button class="nav-button w-full text-left text-lg px-6 py-3"
         @click="open=false; $nextTick(() => showSection('contact'))" aria-controls="contact">Contact</button>
     </nav>
   </header>
 
-  <!-- MAIN -->
   <main class="md:h-screen w-full md:overflow-hidden relative min-h-screen overflow-y-auto" id="main">
-    <!-- HOME -->
     <section id="home" class="active" aria-labelledby="home-heading">
       <img src="assets/home.png" alt="Home" />
       <div class="absolute top-1/2 transform -translate-y-[30%] left-1/2 -translate-x-1/2 z-10 w-full px-6">
@@ -130,7 +112,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" aria-labelledby="about-heading">
       <img src="assets/about.png" alt="About" loading="lazy" />
       <div class="absolute top-1/2 transform -translate-y-[30%] left-1/2 -translate-x-1/2 z-10 w-full px-6">
@@ -149,7 +130,6 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS -->
     <section id="testimonials" aria-labelledby="testimonials-heading">
       <img src="assets/testimonials.png" alt="Testimonials" loading="lazy" />
       <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[30%] z-10 w-full px-6">
@@ -202,7 +182,6 @@
       </div>
     </section>
 
-    <!-- INDIVIDUALS -->
     <section id="individuals" aria-labelledby="individuals-heading">
       <img src="assets/individuals.png" alt="Individuals" loading="lazy" />
       <div class="absolute top-1/2 transform -translate-y-[30%] left-1/2 -translate-x-1/2 z-10 w-full px-6">
@@ -220,7 +199,6 @@
       </div>
     </section>
 
-    <!-- CORPORATE -->
     <section id="corporate" aria-labelledby="corporate-heading">
       <img src="assets/corporate.png" alt="Corporate" loading="lazy" />
       <div class="absolute bottom-[25%] left-1/2 -translate-x-1/2 z-10 w-full px-6">
@@ -236,18 +214,16 @@
       </div>
     </section>
 
-    <!-- PACKAGES (intentionally unchanged behavior) -->
+    <!-- PACKAGES section unchanged structurally -->
     <section id="packages" aria-labelledby="packages-heading">
       <img src="assets/packages.png" alt="Packages" loading="lazy" />
       <div class="absolute top-[140px] left-1/2 -translate-x-1/2 z-10 w-full px-6">
         <div class="flex flex-col items-center justify-center">
           <h2 id="packages-heading" class="sr-only">Packages</h2>
-          <!-- WhatsApp Info Button (kept as-is) -->
           <a href="https://wa.me/6587844889" target="_blank"
             class="mb-8 px-8 py-4 bg-[#25D366] text-white font-bold rounded-full shadow-lg text-xl uppercase hover:scale-105 transition">
             WhatsApp for Info
           </a>
-          <!-- Packages Image Row (kept as-is with internal horizontal scroll) -->
           <div class="flex flex-row gap-6 md:gap-12 items-center justify-center w-full max-w-7xl overflow-x-auto">
             <img src="assets/DeepTissueSportsMassage.jpeg" alt="Deep Tissue Sports Massage" loading="lazy"
               class="h-52 md:h-64 lg:h-80 object-contain rounded-2xl shadow-2xl bg-white" />
@@ -264,7 +240,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" aria-labelledby="contact-heading">
       <img src="assets/contact.png" alt="Contact" loading="lazy" />
       <div class="absolute bottom-[25%] left-1/2 -translate-x-1/2 z-10 w-full px-6">
@@ -284,7 +259,6 @@
     </section>
   </main>
 
-  <!-- BOOK NOW BUTTON (unchanged) -->
   <a
     href="https://muscleminit.setmore.com"
     target="_blank" rel="noopener"
@@ -293,7 +267,6 @@
     Book Now
   </a>
 
-  <!-- SOCIAL MEDIA ICONS (unchanged) -->
   <div class="fixed bottom-24 right-6 z-50 hidden md:flex flex-col items-center space-y-4">
     <a class="w-14 h-14 bg-white flex items-center justify-center rounded-full shadow-lg hover:animate-bounce transition-all duration-300"
        href="https://www.instagram.com/muscleminit/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -332,9 +305,7 @@
     </a>
   </div>
 
-  <!-- Scripts -->
   <script>
-    // Adjust background image position/height based on header height
     function adjustSectionImages() {
       const header = document.querySelector('header.fixed.top-0');
       if (!header) return;
@@ -345,7 +316,6 @@
       });
     }
 
-    // Section navigation
     const sectionOrder = ['home', 'about', 'testimonials', 'individuals', 'corporate', 'packages', 'contact'];
     let currentSection = 'home';
 
@@ -372,18 +342,16 @@
 
       currentSection = sectionId;
 
-      // Toggle Book Now visibility on Packages (unchanged behavior)
       const bookNowBtn = document.querySelector('.book-now-btn');
       if (bookNowBtn) {
         bookNowBtn.style.display = (sectionId === 'packages') ? 'none' : 'block';
       }
     }
 
-    // Logo spin on hover or nav click
     const logo = document.getElementById('logo');
     function spinLogoOnce() {
       logo.classList.remove('spin-once');
-      void logo.offsetWidth; // restart animation
+      void logo.offsetWidth;
       logo.classList.add('spin-once');
     }
     if (logo) {
@@ -393,7 +361,6 @@
       button.addEventListener('click', () => spinLogoOnce());
     });
 
-    // Testimonial carousel
     const carousel = document.getElementById('testimonial-carousel');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
@@ -427,7 +394,6 @@
       updateCarousel();
     }, 4000);
 
-    // Init
     window.addEventListener('DOMContentLoaded', () => {
       adjustSectionImages();
     });
